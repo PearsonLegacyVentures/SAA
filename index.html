@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Club 1600 — SAA Expense Dashboard</title>
+<style>
+:root{--navy:#004165;--maroon:#772432;--bg:#f6f7f9;--card:#fff;--ink:#101828;--muted:#667085;--line:#e6e9ee;--green:#067647;--greenbg:#ecfdf3;--red:#b42318;--redbg:#fef3f2}
+*{box-sizing:border-box}body{margin:0;font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:var(--bg);color:var(--ink)}
+header{background:linear-gradient(115deg,var(--navy),#082f49 62%,var(--maroon));color:#fff;padding:28px 28px 36px}.wrap{max-width:1280px;margin:auto}
+.eyebrow{font-size:12px;letter-spacing:.14em;text-transform:uppercase;opacity:.78;font-weight:800}h1{margin:6px 0 8px;font-size:clamp(30px,4vw,48px);letter-spacing:-.04em}.sub{margin:0;opacity:.82}
+.toolbar{display:flex;gap:10px;flex-wrap:wrap;margin-top:20px}.toolbar button{border:1px solid rgba(255,255,255,.28);background:rgba(255,255,255,.1);color:#fff;padding:9px 13px;border-radius:10px;font-weight:750;cursor:pointer}
+main{max-width:1280px;margin:-18px auto 48px;padding:0 20px}.card{background:var(--card);border:1px solid var(--line);border-radius:16px;box-shadow:0 8px 24px rgba(16,24,40,.05)}
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}.kpi{padding:18px}.label{color:var(--muted);font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.08em}.value{font-size:28px;font-weight:850;margin-top:6px}
+.grid2{display:grid;grid-template-columns:1.1fr .9fr;gap:16px;margin-top:16px}.section{padding:20px}.section h2{margin:0 0 4px;font-size:18px}.note{margin:0 0 18px;color:var(--muted);font-size:13px}
+.month-row{display:grid;grid-template-columns:90px 1fr 110px;gap:12px;align-items:center;margin:11px 0}.bar{height:12px;background:#eef1f4;border-radius:20px;overflow:hidden}.bar span{display:block;height:100%;background:linear-gradient(90deg,var(--navy),#0e7490)}
+.money{text-align:right;font-weight:800;font-variant-numeric:tabular-nums}.cat-row{display:grid;grid-template-columns:1fr 120px;gap:16px;padding:10px 0;border-bottom:1px solid var(--line)}.cat-row:last-child{border-bottom:0}
+.badge{display:inline-flex;padding:5px 8px;border-radius:999px;font-size:11px;font-weight:800}.settled{background:var(--greenbg);color:var(--green)}.ar{background:var(--redbg);color:var(--red)}
+.arbox{border-left:4px solid var(--maroon);padding:14px 16px;background:#fff7f8;border-radius:12px}.ar-row{display:flex;justify-content:space-between;gap:14px;padding:10px 0;border-bottom:1px solid #f0d8dd}.ar-row:last-child{border-bottom:0}
+.filters{display:grid;grid-template-columns:2fr repeat(3,1fr);gap:10px;margin:18px 0 12px}input,select{width:100%;border:1px solid #d0d5dd;background:#fff;border-radius:10px;padding:10px 12px;font:inherit}
+.table-card{margin-top:16px;overflow:hidden}.table-head{padding:18px 18px 0}.table-scroll{overflow:auto}table{width:100%;border-collapse:collapse;min-width:1050px}
+th{background:#f8fafc;color:#475467;font-size:11px;text-transform:uppercase;letter-spacing:.06em;text-align:left;padding:12px;border-bottom:1px solid var(--line)}td{padding:12px;border-bottom:1px solid var(--line);font-size:13px;vertical-align:top}td.amount{text-align:right;font-weight:800}.status-btn{border:0;background:transparent;padding:0;cursor:pointer}
+small{color:var(--muted)}@media(max-width:900px){.kpis{grid-template-columns:repeat(2,1fr)}.grid2{grid-template-columns:1fr}.filters{grid-template-columns:1fr 1fr}}@media(max-width:560px){main{padding:0 12px}.filters{grid-template-columns:1fr}}
+@media print{header{background:#fff;color:#000;border-bottom:2px solid #111}.toolbar,.filters,.status-btn{display:none!important}body{background:#fff}.card{box-shadow:none}main{margin:0 auto}.table-scroll{overflow:visible}table{min-width:0}}
+</style>
+</head>
+<body>
+<header><div class="wrap">
+<div class="eyebrow">First Bahamas Branch • Toastmasters Club 1600</div>
+<h1>SAA Expense Control</h1>
+<p class="sub">Sergeant at Arms spending, reimbursement exposure, monthly trends and category mix.</p>
+<div class="toolbar"><button onclick="window.print()">Print / Save PDF</button><button onclick="exportCSV()">Export filtered CSV</button><button onclick="resetStatuses()">Reset local status changes</button></div>
+</div></header>
+
+<main>
+<section class="kpis">
+<div class="card kpi"><div class="label">Total Recorded Spend</div><div class="value" id="kTotal">—</div><small>All receipts and paid invoices logged</small></div>
+<div class="card kpi"><div class="label">Settled</div><div class="value" id="kSettled">—</div><small id="settledPct">—</small></div>
+<div class="card kpi"><div class="label">Accounts Receivable</div><div class="value" id="kAR">—</div><small>Currently owed back to SAA</small></div>
+<div class="card kpi"><div class="label">Transactions</div><div class="value" id="kCount">—</div><small>Unique purchases only</small></div>
+</section>
+
+<section class="grid2">
+<div class="card section"><h2>Monthly spend</h2><p class="note">Recorded spending by calendar month.</p><div id="monthly"></div></div>
+<div class="card section"><h2>Current reimbursement position</h2><p class="note">The two batches currently owed.</p>
+<div class="arbox">
+<div class="ar-row"><div><strong>A/R Batch 1 — September</strong><br><small>Previous receipt batch</small></div><div class="money">B$1,016.83</div></div>
+<div class="ar-row"><div><strong>A/R Batch 2 — Latest</strong><br><small>Sep 29–30 + Oct purchases</small></div><div class="money">B$750.65</div></div>
+<div class="ar-row"><div><strong>Total currently owed</strong></div><div class="money" id="arTotal">B$1,767.48</div></div>
+</div><p class="note" style="margin-top:12px">Click a status badge in the ledger when reimbursement is received. Changes save in this browser.</p></div>
+</section>
+
+<section class="grid2">
+<div class="card section"><h2>Spend by category</h2><p class="note">Budget view across the SAA function.</p><div id="categories"></div></div>
+<div class="card section"><h2>Control notes</h2><p class="note">Items to keep visible for governance and handover.</p>
+<div class="cat-row"><div><strong>Back-to-School Outreach</strong><br><small>Major one-off programme spend</small></div><div class="money">B$3,697.68</div></div>
+<div class="cat-row"><div><strong>Apex September quote</strong><br><small>Confirmed paid</small></div><div><span class="badge settled">Expense</span></div></div>
+<div class="cat-row"><div><strong>Unclassified receipt</strong><br><small>One Sep vendor is unclear from image</small></div><div class="money">B$35.00</div></div>
+</div>
+</section>
+
+<section class="card table-card">
+<div class="table-head"><h2 style="margin:0">Expense ledger</h2><p class="note">Search, filter and update reimbursement status.</p>
+<div class="filters"><input id="q" placeholder="Search vendor or description…" oninput="renderTable()"><select id="month" onchange="renderTable()"><option value="">All months</option></select><select id="cat" onchange="renderTable()"><option value="">All categories</option></select><select id="status" onchange="renderTable()"><option value="">All statuses</option><option>Settled</option><option>Receivable</option></select></div></div>
+<div class="table-scroll"><table><thead><tr><th>Date</th><th>Vendor</th><th>Description</th><th>Category</th><th>Project</th><th>Status</th><th style="text-align:right">Amount</th></tr></thead><tbody id="ledger"></tbody></table></div>
+</section>
+</main>
+
+<script>
+const baseData=[
+["2026-07-05","Jul 2026","The Purple Brew","Alcohol purchase","Bar & Beverage Inventory","Club Operations",210.46,"Settled","Settled through Aug"],
+["2026-07-06","Jul 2026","The Restaurant Supply Company #2 Ltd.","Plastic cups and peanuts","Food & Refreshments","Club Operations",38.19,"Settled","Settled through Aug"],
+["2026-07-06","Jul 2026","Apex Awards Signs & Engraving","4 trophies / customized mylar","Awards & Recognition","Club Operations",40.26,"Settled","Settled through Aug"],
+["2026-07-06","Jul 2026","700 Wines & Spirits","Wine, gin and spirits","Bar & Beverage Inventory","Club Operations",129.00,"Settled","Settled through Aug"],
+["2026-07-14","Jul 2026","Domino's Pizza","3 pizzas","Food & Refreshments","Club Operations",38.50,"Settled","Settled through Aug"],
+["2026-07-23","Jul 2026","Meat Max & Groceries","Juices / mixers","Bar & Beverage Inventory","Club Operations",41.01,"Settled","Settled through Aug"],
+["2026-08-04","Aug 2026","The Restaurant Supply Company #2 Ltd.","Alcohol, wine and cranberry juice","Bar & Beverage Inventory","Club Operations",141.97,"Settled","Settled through Aug"],
+["2026-08-04","Aug 2026","Apex Awards Signs & Engraving","12 trophies and customized mylar","Awards & Recognition","Club Operations",120.78,"Settled","Settled through Aug"],
+["2026-08-04","Aug 2026","3D Party Rental & Mascots","Bouncing house with slide","Event Rentals & Activities","Back-to-School Outreach",200.00,"Settled","Settled through Aug"],
+["2026-08-11","Aug 2026","Meat Max & Groceries","Club soda, cranberry juice, forks and plates","Food & Refreshments","Back-to-School Outreach",58.12,"Settled","Settled through Aug"],
+["2026-08-24","Aug 2026","Office & School Supplies","100 backpacks and 96 composition books","Community Outreach & School Supplies","Back-to-School Outreach",1128.24,"Settled","Settled through Aug"],
+["2026-08-25","Aug 2026","Meat Max & Groceries","BBQ meats, corn, seasoning, drinks and pans","Food & Refreshments","Back-to-School Outreach",109.80,"Settled","Settled through Aug"],
+["2026-08-26","Aug 2026","Kelly's House & Home","School/community supply purchase","Community Outreach & School Supplies","Back-to-School Outreach",86.89,"Settled","Settled through Aug"],
+["2026-08-27","Aug 2026","Meat Max & Groceries","Lemonade, cranberry juice and Coke","Food & Refreshments","Back-to-School Outreach",35.59,"Settled","Settled through Aug"],
+["2026-08-27","Aug 2026","Office & School Supplies","School supplies / books / pens","Community Outreach & School Supplies","Back-to-School Outreach",937.62,"Settled","Settled through Aug"],
+["2026-08-28","Aug 2026","Office / Supply Store","Pens, staple removers and desk tool holders","Community Outreach & School Supplies","Back-to-School Outreach",231.50,"Settled","Settled through Aug"],
+["2026-08-28","Aug 2026","Kruger Plastics Ltd.","Large double-layered paper bags","Community Outreach & School Supplies","Back-to-School Outreach",46.42,"Settled","Settled through Aug"],
+["2026-08-28","Aug 2026","Super Enterprise","Community / school event supplies","Community Outreach & School Supplies","Back-to-School Outreach",28.50,"Settled","Settled through Aug"],
+["2026-08-28","Aug 2026","Animal Farm / D'Vontae Rolle","Animal farm service","Event Rentals & Activities","Back-to-School Outreach",350.00,"Settled","Settled through Aug"],
+["2026-08-28","Aug 2026","A.B.M Party Rental","Tents and basketball arcade","Event Rentals & Activities","Back-to-School Outreach",485.00,"Settled","Settled through Aug"],
+["2026-09-01","Sep 2026","The WOK","Spirits purchase","Bar & Beverage Inventory","Club Operations",182.49,"Receivable","A/R Batch 1 — Sep"],
+["2026-09-01","Sep 2026","Quality Supermarket","Sodas and cranberry juice","Bar & Beverage Inventory","Club Operations",27.68,"Receivable","A/R Batch 1 — Sep"],
+["2026-09-01","Sep 2026","Apex Awards Signs & Engraving","Trophies / customized mylar — quote confirmed paid","Awards & Recognition","Club Operations",120.78,"Receivable","A/R Batch 1 — Sep"],
+["","Sep 2026","Unidentified vendor","Receipt total visible; vendor text unclear","Other / Unclassified","Club Operations",35.00,"Receivable","A/R Batch 1 — Sep"],
+["","Sep 2026","Meat Max & Groceries","Mixers / refreshments","Bar & Beverage Inventory","Club Operations",69.21,"Receivable","A/R Batch 1 — Sep"],
+["2026-09-03","Sep 2026","Meat Max & Groceries","Beverage / meeting purchase","Bar & Beverage Inventory","Club Operations",32.77,"Receivable","A/R Batch 1 — Sep"],
+["2026-09-03","Sep 2026","Commonwealth Brewery Ltd.","Beverage purchase","Bar & Beverage Inventory","Club Operations",52.15,"Receivable","A/R Batch 1 — Sep"],
+["2026-09-10","Sep 2026","Commonwealth Brewery Ltd.","Beverage purchase","Bar & Beverage Inventory","Club Operations",24.75,"Receivable","A/R Batch 1 — Sep"],
+["2026-09-14","Sep 2026","The Restaurant Supply Company #2 Ltd.","Spirits, wine and soft drinks","Bar & Beverage Inventory","Club Operations",164.11,"Receivable","A/R Batch 1 — Sep"],
+["2026-09-15","Sep 2026","Bertha's Go-Go Ribs","BBQ chicken and macaroni catering","Food & Refreshments","Club Operations",115.50,"Receivable","A/R Batch 1 — Sep"],
+["2026-09-17","Sep 2026","Super Value","Plantain chips","Food & Refreshments","Club Operations",17.29,"Receivable","A/R Batch 1 — Sep"],
+["2026-09-24","Sep 2026","700 Wines & Spirits","Spirits, wine, club soda and ginger beer","Bar & Beverage Inventory","Club Operations",135.80,"Receivable","A/R Batch 1 — Sep"],
+["2026-09-24","Sep 2026","Super G Enterprise","Planters honey snacks","Food & Refreshments","Club Operations",14.55,"Receivable","A/R Batch 1 — Sep"],
+["","Sep 2026","The Copier Limited","Business cards / cutting","Printing & Branding","Club Operations",24.75,"Receivable","A/R Batch 1 — Sep"],
+["2026-09-29","Sep 2026","Quality Supermarket","Lightbourne biodegradable spoons","Meeting / Event Supplies","Club Operations",7.10,"Receivable","A/R Batch 2 — Latest"],
+["2026-09-29","Sep 2026","Quality Supermarket","Small supermarket purchase","Food & Refreshments","Club Operations",9.46,"Receivable","A/R Batch 2 — Latest"],
+["2026-09-30","Sep 2026","700 Wines & Spirits","Wine and spirits","Bar & Beverage Inventory","Club Operations",191.40,"Receivable","A/R Batch 2 — Latest"],
+["2026-09-30","Sep 2026","The Restaurant Supply Company","Coke, cranberry juice and other bar supplies","Bar & Beverage Inventory","Club Operations",135.33,"Receivable","A/R Batch 2 — Latest"],
+["2026-10-03","Oct 2026","Meat Max & Groceries","Beverage / meeting purchase","Bar & Beverage Inventory","Club Operations",61.97,"Receivable","A/R Batch 2 — Latest"],
+["2026-10-03","Oct 2026","Jimmy's Wines & Spirits #3","Mount Gay, Gordon's Gin and Tito's Vodka","Bar & Beverage Inventory","Club Operations",113.85,"Receivable","A/R Batch 2 — Latest"],
+["","Oct 2026","External Processor / Liquor Vendor","Gin, vodka, rum, amaretto and port","Bar & Beverage Inventory","Club Operations",210.69,"Receivable","A/R Batch 2 — Latest"],
+["2026-10-03","Oct 2026","Phoenix Fresh Market","3 bags of ice","Bar & Beverage Inventory","Club Operations",20.85,"Receivable","A/R Batch 2 — Latest"]
+].map(function(r){return {date:r[0],month:r[1],vendor:r[2],description:r[3],category:r[4],project:r[5],amount:r[6],status:r[7],batch:r[8]};});
+
+let data=JSON.parse(JSON.stringify(baseData));
+function money(n){return "B$"+Number(n).toLocaleString("en-US",{minimumFractionDigits:2,maximumFractionDigits:2});}
+function load(){var s=JSON.parse(localStorage.getItem("club1600_saa_statuses")||"{}");data.forEach(function(x,i){if(s[i])x.status=s[i];});}
+function save(){var s={};data.forEach(function(x,i){s[i]=x.status;});localStorage.setItem("club1600_saa_statuses",JSON.stringify(s));}
+function resetStatuses(){localStorage.removeItem("club1600_saa_statuses");data=JSON.parse(JSON.stringify(baseData));renderAll();}
+function toggleStatus(i){data[i].status=data[i].status==="Settled"?"Receivable":"Settled";save();renderAll();}
+function aggregate(key){var out={};data.forEach(function(x){out[x[key]]=(out[x[key]]||0)+x.amount;});return out;}
+function renderKPIs(){var total=data.reduce(function(a,x){return a+x.amount;},0);var settled=data.filter(function(x){return x.status==="Settled";}).reduce(function(a,x){return a+x.amount;},0);var ar=total-settled;
+document.getElementById("kTotal").textContent=money(total);document.getElementById("kSettled").textContent=money(settled);document.getElementById("kAR").textContent=money(ar);document.getElementById("kCount").textContent=data.length;document.getElementById("settledPct").textContent=((settled/total)*100).toFixed(1)+"% of spend settled";document.getElementById("arTotal").textContent=money(ar);}
+function renderMonthly(){var order=["Jul 2026","Aug 2026","Sep 2026","Oct 2026"],vals=aggregate("month"),mx=Math.max.apply(null,order.map(function(m){return vals[m]||0;}));document.getElementById("monthly").innerHTML=order.map(function(m){return '<div class="month-row"><div><strong>'+m+'</strong></div><div class="bar"><span style="width:'+(((vals[m]||0)/mx)*100).toFixed(1)+'%"></span></div><div class="money">'+money(vals[m]||0)+'</div></div>';}).join("");}
+function renderCategories(){var vals=aggregate("category"),arr=Object.entries(vals).sort(function(a,b){return b[1]-a[1];});document.getElementById("categories").innerHTML=arr.map(function(x){return '<div class="cat-row"><div>'+x[0]+'</div><div class="money">'+money(x[1])+'</div></div>';}).join("");}
+function filtered(){var q=document.getElementById("q").value.trim().toLowerCase(),m=document.getElementById("month").value,c=document.getElementById("cat").value,s=document.getElementById("status").value;return data.map(function(x,i){var y=Object.assign({},x);y._i=i;return y;}).filter(function(x){return(!q||(x.vendor+" "+x.description).toLowerCase().includes(q))&&(!m||x.month===m)&&(!c||x.category===c)&&(!s||x.status===s);}).sort(function(a,b){return(b.date||b.month).localeCompare(a.date||a.month);});}
+function renderTable(){document.getElementById("ledger").innerHTML=filtered().map(function(x){return '<tr><td>'+(x.date||x.month)+'</td><td><strong>'+x.vendor+'</strong><br><small>'+x.batch+'</small></td><td>'+x.description+'</td><td>'+x.category+'</td><td>'+x.project+'</td><td><button class="status-btn" onclick="toggleStatus('+x._i+')"><span class="badge '+(x.status==="Settled"?"settled":"ar")+'">'+x.status+'</span></button></td><td class="amount">'+money(x.amount)+'</td></tr>';}).join("");}
+function setup(){var months=[...new Set(data.map(function(x){return x.month;}))],cats=[...new Set(data.map(function(x){return x.category;}))].sort();document.getElementById("month").innerHTML='<option value="">All months</option>'+months.map(function(x){return "<option>"+x+"</option>";}).join("");document.getElementById("cat").innerHTML='<option value="">All categories</option>'+cats.map(function(x){return "<option>"+x+"</option>";}).join("");}
+function exportCSV(){var rows=filtered(),cols=["date","month","vendor","description","category","project","status","amount"];var csv=[cols.join(",")].concat(rows.map(function(r){return cols.map(function(c){return '"'+String(r[c]||"").replaceAll('"','""')+'"';}).join(",");})).join("\n");var b=new Blob([csv],{type:"text/csv;charset=utf-8"}),a=document.createElement("a");a.href=URL.createObjectURL(b);a.download="Club1600_SAA_Expenses_Filtered.csv";a.click();}
+function renderAll(){renderKPIs();renderMonthly();renderCategories();renderTable();}
+load();setup();renderAll();
+</script>
+</body>
+</html>
