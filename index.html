@@ -42,11 +42,12 @@ small{color:var(--muted)}@media(max-width:900px){.kpis{grid-template-columns:rep
 
 <section class="grid2">
 <div class="card section"><h2>Monthly spend</h2><p class="note">Recorded spending by calendar month.</p><div id="monthly"></div></div>
-<div class="card section"><h2>Current reimbursement position</h2><p class="note">The two batches currently owed.</p>
+<div class="card section"><h2>Current reimbursement position</h2><p class="note">Current reimbursement items owed to the SAA.</p>
 <div class="arbox">
 <div class="ar-row"><div><strong>A/R Batch 1 — September</strong><br><small>Previous receipt batch</small></div><div class="money">B$1,016.83</div></div>
 <div class="ar-row"><div><strong>A/R Batch 2 — Latest</strong><br><small>Sep 29–30 + Oct purchases</small></div><div class="money">B$750.65</div></div>
-<div class="ar-row"><div><strong>Total currently owed</strong></div><div class="money" id="arTotal">B$1,767.48</div></div>
+<div class="ar-row"><div><strong>Q1 Social Security</strong><br><small>Security expense for Q1 Social</small></div><div class="money">B$300.00</div></div>
+<div class="ar-row"><div><strong>Total currently owed</strong></div><div class="money" id="arTotal">B$2,067.48</div></div>
 </div><p class="note" style="margin-top:12px">Click a status badge in the ledger when reimbursement is received. Changes save in this browser.</p></div>
 </section>
 
@@ -109,7 +110,8 @@ const baseData=[
 ["2026-10-03","Oct 2026","Meat Max & Groceries","Beverage / meeting purchase","Bar & Beverage Inventory","Club Operations",61.97,"Receivable","A/R Batch 2 — Latest"],
 ["2026-10-03","Oct 2026","Jimmy's Wines & Spirits #3","Mount Gay, Gordon's Gin and Tito's Vodka","Bar & Beverage Inventory","Club Operations",113.85,"Receivable","A/R Batch 2 — Latest"],
 ["","Oct 2026","External Processor / Liquor Vendor","Gin, vodka, rum, amaretto and port","Bar & Beverage Inventory","Club Operations",210.69,"Receivable","A/R Batch 2 — Latest"],
-["2026-10-03","Oct 2026","Phoenix Fresh Market","3 bags of ice","Bar & Beverage Inventory","Club Operations",20.85,"Receivable","A/R Batch 2 — Latest"]
+["2026-10-03","Oct 2026","Phoenix Fresh Market","3 bags of ice","Bar & Beverage Inventory","Club Operations",20.85,"Receivable","A/R Batch 2 — Latest"],
+["2026-10-05","Oct 2026","Q1 Social Security","Security expense for Q1 Social","Event Security","Q1 Social",300.00,"Receivable","A/R — Q1 Social"]
 ].map(function(r){return {date:r[0],month:r[1],vendor:r[2],description:r[3],category:r[4],project:r[5],amount:r[6],status:r[7],batch:r[8]};});
 
 let data=JSON.parse(JSON.stringify(baseData));
