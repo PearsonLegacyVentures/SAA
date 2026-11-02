@@ -13,13 +13,13 @@ header{background:linear-gradient(115deg,var(--navy),#082f49 62%,var(--maroon));
 main{max-width:1280px;margin:-18px auto 48px;padding:0 20px}.card{background:var(--card);border:1px solid var(--line);border-radius:16px;box-shadow:0 8px 24px rgba(16,24,40,.05)}
 .kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}.kpi{padding:18px}.label{color:var(--muted);font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.08em}.value{font-size:28px;font-weight:850;margin-top:6px}
 .grid2{display:grid;grid-template-columns:1.1fr .9fr;gap:16px;margin-top:16px}
-.charts-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-top:16px}
-.chart-card{padding:20px;min-height:320px}
+.charts-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:16px;margin-top:16px}
+.chart-card{padding:22px;min-height:300px}
 .chart-card h2{margin:0 0 4px;font-size:18px}
 .chart-list{margin-top:18px}
-.chart-item{display:grid;grid-template-columns:minmax(130px,220px) 1fr 95px;gap:12px;align-items:center;margin:12px 0}
+.chart-item{display:grid;grid-template-columns:minmax(145px,220px) 1fr 100px;gap:12px;align-items:center;margin:13px 0}
 .chart-label{font-size:12px;font-weight:750;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.chart-track{height:14px;background:#eef2f6;border-radius:999px;overflow:hidden}
+.chart-track{height:12px;background:#eef2f6;border-radius:999px;overflow:hidden}
 .chart-fill{height:100%;border-radius:999px;background:linear-gradient(90deg,var(--navy),#0e7490)}
 .chart-fill.alt{background:linear-gradient(90deg,var(--maroon),#a63b50)}
 .donut-layout{display:grid;grid-template-columns:180px 1fr;gap:24px;align-items:center;margin-top:24px}
@@ -32,7 +32,20 @@ main{max-width:1280px;margin:-18px auto 48px;padding:0 20px}.card{background:var
 .legend-key{display:flex;align-items:center;gap:8px}
 .legend-dot{width:10px;height:10px;border-radius:50%;background:var(--navy)}
 .legend-dot.maroon{background:var(--maroon)}
-.chart-foot{margin-top:12px;color:var(--muted);font-size:11px}.section{padding:20px}.section h2{margin:0 0 4px;font-size:18px}.note{margin:0 0 18px;color:var(--muted);font-size:13px}
+.chart-foot{margin-top:12px;color:var(--muted);font-size:11px}
+.receivable-strip{margin-top:16px;padding:22px}
+.receivable-copy{display:flex;justify-content:space-between;gap:24px;align-items:flex-start}
+.receivable-copy h2{margin:4px 0 5px;font-size:20px}
+.receivable-copy p{margin:0;color:var(--muted);font-size:13px;max-width:720px}
+.eyebrow-dark{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--maroon);font-weight:850}
+.receivable-total{text-align:right;min-width:170px}
+.receivable-total span{display:block;color:var(--muted);font-size:12px;font-weight:700}
+.receivable-total strong{display:block;font-size:28px;letter-spacing:-.03em;margin-top:2px}
+.receivable-months{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:18px}
+.receivable-month{display:flex;justify-content:space-between;gap:16px;align-items:center;padding:14px 16px;border:1px solid var(--line);border-radius:12px;background:#fbfcfd}
+.receivable-month div strong{display:block;font-size:13px}
+.receivable-month small{display:block;margin-top:3px;line-height:1.25}
+.receivable-month>strong{white-space:nowrap;font-size:16px}.section{padding:20px}.section h2{margin:0 0 4px;font-size:18px}.note{margin:0 0 18px;color:var(--muted);font-size:13px}
 .month-row{display:grid;grid-template-columns:90px 1fr 110px;gap:12px;align-items:center;margin:11px 0}.bar{height:12px;background:#eef1f4;border-radius:20px;overflow:hidden}.bar span{display:block;height:100%;background:linear-gradient(90deg,var(--navy),#0e7490)}
 .money{text-align:right;font-weight:800;font-variant-numeric:tabular-nums}.cat-row{display:grid;grid-template-columns:1fr 120px;gap:16px;padding:10px 0;border-bottom:1px solid var(--line)}.cat-row:last-child{border-bottom:0}
 .badge{display:inline-flex;padding:5px 8px;border-radius:999px;font-size:11px;font-weight:800}.settled{background:var(--greenbg);color:var(--green)}.ar{background:var(--redbg);color:var(--red)}
@@ -40,20 +53,20 @@ main{max-width:1280px;margin:-18px auto 48px;padding:0 20px}.card{background:var
 .filters{display:grid;grid-template-columns:2fr repeat(4,1fr);gap:10px;margin:18px 0 12px}input,select{width:100%;border:1px solid #d0d5dd;background:#fff;border-radius:10px;padding:10px 12px;font:inherit}
 .table-card{margin-top:16px;overflow:hidden}.table-head{padding:18px 18px 0}.table-scroll{overflow:auto}table{width:100%;border-collapse:collapse;min-width:1050px}
 th{background:#f8fafc;color:#475467;font-size:11px;text-transform:uppercase;letter-spacing:.06em;text-align:left;padding:12px;border-bottom:1px solid var(--line)}td{padding:12px;border-bottom:1px solid var(--line);font-size:13px;vertical-align:top}td.amount{text-align:right;font-weight:800}.status-btn{border:0;background:transparent;padding:0;cursor:pointer}
-small{color:var(--muted)}@media(max-width:900px){.kpis{grid-template-columns:repeat(2,1fr)}.grid2,.charts-grid{grid-template-columns:1fr}.filters{grid-template-columns:1fr 1fr}.donut-layout{grid-template-columns:1fr;justify-items:center;width:100%}}@media(max-width:560px){main{padding:0 12px}.filters{grid-template-columns:1fr}}
-@media print{header{background:#fff;color:#000;border-bottom:2px solid #111}.toolbar,.filters,.status-btn{display:none!important}body{background:#fff}.card{box-shadow:none}main{margin:0 auto}.table-scroll{overflow:visible}table{min-width:0}}
+small{color:var(--muted)}@media(max-width:900px){.kpis{grid-template-columns:repeat(2,1fr)}.grid2,.charts-grid,.receivable-months{grid-template-columns:1fr}.filters{grid-template-columns:1fr 1fr}.donut-layout{grid-template-columns:1fr;justify-items:center;width:100%}.receivable-copy{display:block}.receivable-total{text-align:left;margin-top:14px}}@media(max-width:560px){main{padding:0 12px}.filters{grid-template-columns:1fr}}
+@media print{header{background:#fff;color:#000;border-bottom:2px solid #111}.toolbar,.filters{display:none!important}.status-btn{display:inline!important}body{background:#fff}.card{box-shadow:none}main{margin:0 auto}.table-scroll{overflow:visible}table{min-width:0}}
 </style>
 </head>
 <body>
 <header><div class="wrap">
 <div class="eyebrow">First Bahamas Branch • Toastmasters Club 1600</div>
 <h1>SAA Expense Control</h1>
-<p class="sub">Complete Sergeant at Arms spending record: monthly totals, categories, reimbursement exposure and event attribution.</p>
+<p class="sub">A single operating view of SAA spend, event attribution, reimbursements and every underlying transaction.</p>
 <div class="toolbar"><button onclick="window.print()">Print / Save PDF</button><button onclick="exportCSV()">Export filtered CSV</button><button onclick="resetStatuses()">Reset local status changes</button></div>
 </div></header>
 
 <main>
-<div style="max-width:1280px;margin:0 auto 12px;padding:0 2px;color:#667085;font-size:12px"><strong>Record integrity:</strong> All transaction history is preserved. Event labels are an additional classification layer and do not replace monthly/category records.</div><section class="kpis">
+<section class="kpis">
 <div class="card kpi"><div class="label">Total Recorded Spend</div><div class="value" id="kTotal">—</div><small>All receipts and paid invoices logged</small></div>
 <div class="card kpi"><div class="label">Settled</div><div class="value" id="kSettled">—</div><small id="settledPct">—</small></div>
 <div class="card kpi"><div class="label">Accounts Receivable</div><div class="value" id="kAR">—</div><small>Currently owed back to SAA</small></div>
@@ -62,23 +75,23 @@ small{color:var(--muted)}@media(max-width:900px){.kpis{grid-template-columns:rep
 
 <section class="charts-grid">
   <div class="card chart-card">
-    <h2>Spend by activity</h2>
-    <p class="note">How SAA spend is distributed across meetings, programmes and special events.</p>
+    <h2>Where the money went</h2>
+    <p class="note">Spend by programme and activity. This is the main operating view.</p>
     <div id="activityChart" class="chart-list"></div>
   </div>
   <div class="card chart-card">
-    <h2>Spend by month</h2>
-    <p class="note">July through October reporting trend.</p>
+    <h2>Monthly trend</h2>
+    <p class="note">Reporting-month spend from July through October.</p>
     <div id="monthChart" class="chart-list"></div>
   </div>
   <div class="card chart-card">
-    <h2>Top expense categories</h2>
-    <p class="note">Where the money is actually going.</p>
+    <h2>Expense mix</h2>
+    <p class="note">Top spending categories across all recorded transactions.</p>
     <div id="categoryChart" class="chart-list"></div>
   </div>
   <div class="card chart-card">
-    <h2>Reimbursement position</h2>
-    <p class="note">Settled versus currently receivable.</p>
+    <h2>Reimbursement status</h2>
+    <p class="note">How much has been settled versus what remains outstanding.</p>
     <div class="donut-layout">
       <div id="statusDonut" class="donut"><div class="donut-center" id="statusPct">—</div></div>
       <div id="statusLegend"></div>
@@ -86,49 +99,35 @@ small{color:var(--muted)}@media(max-width:900px){.kpis{grid-template-columns:rep
   </div>
 </section>
 
-<section class="grid2">
-<div class="card section"><h2>Monthly spend</h2><p class="note">Recorded spending by reporting month. Event-preparation purchases may be attributed to the month/event they supported.</p><div id="monthly"></div></div>
-<div class="card section"><h2>Current reimbursement position</h2><p class="note">Current reimbursement items owed to the SAA.</p>
-<div class="arbox">
-<div class="ar-row"><div><strong>September 2026</strong><br><small>Corrected September reimbursement batch</small></div><div class="money">B$1,016.83</div></div>
-<div class="ar-row"><div><strong>October 2026</strong><br><small>Corrected October batch incl. OPM, Q1 Social, weekly meetings and Red Cross Fair</small></div><div class="money">B$2,617.48</div></div>
-<div class="ar-row"><div><strong>Total currently owed</strong></div><div class="money" id="arTotal">B$3,634.31</div></div>
-</div><p class="note" style="margin-top:12px">Click a status badge in the ledger when reimbursement is received. Changes save in this browser.</p></div>
-</section>
 
-<section class="grid2">
-<div class="card section"><h2>Spend by category</h2><p class="note">Budget view across the SAA function.</p><div id="categories"></div></div>
-<div class="card section"><h2>Spend by activity</h2><p class="note">Event and programme attribution across the SAA function.</p><div id="projects"></div></div>
-</section>
-
-<section class="grid2" id="historicalSummary">
-<div class="card section">
-  <h2>Historical monthly record</h2>
-  <p class="note">Full monthly spend remains preserved independently of event attribution.</p>
-  <div class="cat-row"><div><strong>July 2026</strong><br><small>Meeting + Lab and In-Club Leadership Tour</small></div><div class="money">B$497.42</div></div>
-  <div class="cat-row"><div><strong>August 2026</strong><br><small>Neil Percentie Back-to-School + Meeting + Lab</small></div><div class="money">B$3,960.43</div></div>
-  <div class="cat-row"><div><strong>September 2026</strong><br><small>Meeting + Lab + New Members Orientation</small></div><div class="money">B$1,016.83</div></div>
-  <div class="cat-row"><div><strong>October 2026</strong><br><small>OPM, Q1 Social, Meeting + Lab and Red Cross Fair</small></div><div class="money">B$2,617.48</div></div>
-  <div class="cat-row"><div><strong>Total recorded spend</strong></div><div class="money">B$8,092.16</div></div>
-</div>
-
-<div class="card section">
-  <h2>Programme / event record</h2>
-  <p class="note">Special initiatives remain visible separately from normal weekly operations.</p>
-  <div class="cat-row"><div><strong>Neil Percentie Back-to-School</strong></div><div class="money">B$3,697.68</div></div>
-  <div class="cat-row"><div><strong>In-Club Leadership Tour</strong></div><div class="money">B$41.01</div></div>
-  <div class="cat-row"><div><strong>New Members Orientation</strong></div><div class="money">B$84.92</div></div>
-  <div class="cat-row"><div><strong>OPM Meeting</strong></div><div class="money">B$343.29</div></div>
-  <div class="cat-row"><div><strong>Q1 Social</strong></div><div class="money">B$1,232.16</div></div>
-  <div class="cat-row"><div><strong>Red Cross Fair</strong></div><div class="money">B$165.80</div></div>
-  <div class="cat-row"><div><strong>Meeting + Lab</strong></div><div class="money">B$2,527.30</div></div>
-</div>
+<section class="card receivable-strip">
+  <div class="receivable-copy">
+    <div>
+      <div class="eyebrow-dark">Outstanding reimbursement detail</div>
+      <h2>What is currently owed</h2>
+      <p>September and October remain receivable. This section gives the month-level detail without repeating the monthly, activity or category charts above.</p>
+    </div>
+    <div class="receivable-total">
+      <span>Outstanding</span>
+      <strong id="arTotal">B$3,634.31</strong>
+    </div>
+  </div>
+  <div class="receivable-months">
+    <div class="receivable-month">
+      <div><strong>September 2026</strong><small>Corrected reimbursement batch</small></div>
+      <strong>B$1,016.83</strong>
+    </div>
+    <div class="receivable-month">
+      <div><strong>October 2026</strong><small>OPM, Q1 Social, weekly meetings + Red Cross Fair</small></div>
+      <strong>B$2,617.48</strong>
+    </div>
+  </div>
 </section>
 
 <section class="card table-card">
 <div class="table-head"><h2 style="margin:0">Expense ledger</h2><p class="note">Search, filter and update reimbursement status. <strong id="ledgerCount"></strong></p>
 <div class="filters"><input id="q" placeholder="Search vendor or description…" oninput="renderTable()"><select id="month" onchange="renderTable()"><option value="">All months</option></select><select id="project" onchange="renderTable()"><option value="">All activities</option></select><select id="cat" onchange="renderTable()"><option value="">All categories</option></select><select id="status" onchange="renderTable()"><option value="">All statuses</option><option>Settled</option><option>Receivable</option></select></div></div>
-<div class="table-scroll"><table><thead><tr><th>Date</th><th>Vendor</th><th>Description</th><th>Category</th><th>Project</th><th>Status</th><th style="text-align:right">Amount</th></tr></thead><tbody id="ledger"></tbody></table></div>
+<div class="table-scroll"><table><thead><tr><th>Date</th><th>Vendor</th><th>Description</th><th>Category</th><th>Project</th><th>Status</th><th style="text-align:right">Amount</th></tr></thead><tbody id="ledger"></tbody><tfoot><tr><td colspan="6" style="text-align:right;font-weight:850">Filtered total</td><td id="ledgerTotal" class="amount" style="font-size:15px">—</td></tr></tfoot></table></div>
 </section>
 </main>
 
@@ -144,9 +143,6 @@ function toggleStatus(i){data[i].status=data[i].status==="Settled"?"Receivable":
 function aggregate(key){var out={};data.forEach(function(x){out[x[key]]=(out[x[key]]||0)+x.amount;});return out;}
 function renderKPIs(){var total=data.reduce(function(a,x){return a+x.amount;},0);var settled=data.filter(function(x){return x.status==="Settled";}).reduce(function(a,x){return a+x.amount;},0);var ar=total-settled;
 document.getElementById("kTotal").textContent=money(total);document.getElementById("kSettled").textContent=money(settled);document.getElementById("kAR").textContent=money(ar);document.getElementById("kCount").textContent=data.length;document.getElementById("settledPct").textContent=((settled/total)*100).toFixed(1)+"% of spend settled";document.getElementById("arTotal").textContent=money(ar);}
-function renderMonthly(){var order=["Jul 2026","Aug 2026","Sep 2026","Oct 2026"],vals=aggregate("month"),mx=Math.max.apply(null,order.map(function(m){return vals[m]||0;}));document.getElementById("monthly").innerHTML=order.map(function(m){return '<div class="month-row"><div><strong>'+m+'</strong></div><div class="bar"><span style="width:'+(((vals[m]||0)/mx)*100).toFixed(1)+'%"></span></div><div class="money">'+money(vals[m]||0)+'</div></div>';}).join("");}
-function renderCategories(){var vals=aggregate("category"),arr=Object.entries(vals).sort(function(a,b){return b[1]-a[1];});document.getElementById("categories").innerHTML=arr.map(function(x){return '<div class="cat-row"><div>'+x[0]+'</div><div class="money">'+money(x[1])+'</div></div>';}).join("");}
-function renderProjects(){var vals=aggregate("project"),arr=Object.entries(vals).sort(function(a,b){return b[1]-a[1];});document.getElementById("projects").innerHTML=arr.map(function(x){return '<div class="cat-row"><div>'+x[0]+'</div><div class="money">'+money(x[1])+'</div></div>';}).join("");}
 function renderBarChart(target, entries, alt){
   var el=document.getElementById(target); if(!el)return;
   var max=Math.max.apply(null,entries.map(function(x){return x[1];}));
@@ -181,10 +177,10 @@ function renderVisualCharts(){
     '<div class="chart-foot">'+data.length+' individual transactions currently loaded in the ledger.</div>';
 }
 function filtered(){var q=document.getElementById("q").value.trim().toLowerCase(),m=document.getElementById("month").value,p=document.getElementById("project").value,c=document.getElementById("cat").value,s=document.getElementById("status").value;return data.map(function(x,i){var y=Object.assign({},x);y._i=i;return y;}).filter(function(x){return(!q||(x.vendor+" "+x.description).toLowerCase().includes(q))&&(!m||x.month===m)&&(!p||x.project===p)&&(!c||x.category===c)&&(!s||x.status===s);}).sort(function(a,b){return(b.date||b.month).localeCompare(a.date||a.month);});}
-function renderTable(){var rows=filtered();var lc=document.getElementById("ledgerCount");if(lc)lc.textContent=rows.length+" transactions shown.";document.getElementById("ledger").innerHTML=rows.map(function(x){return '<tr><td>'+(x.date||x.month)+'</td><td><strong>'+x.vendor+'</strong><br><small>'+x.batch+'</small></td><td>'+x.description+'</td><td>'+x.category+'</td><td>'+x.project+'</td><td><button class="status-btn" onclick="toggleStatus('+x._i+')"><span class="badge '+(x.status==="Settled"?"settled":"ar")+'">'+x.status+'</span></button></td><td class="amount">'+money(x.amount)+'</td></tr>';}).join("");}
+function renderTable(){var rows=filtered();var lc=document.getElementById("ledgerCount");if(lc)lc.textContent=rows.length+" transactions shown.";var lt=document.getElementById("ledgerTotal");if(lt)lt.textContent=money(rows.reduce(function(a,x){return a+x.amount;},0));document.getElementById("ledger").innerHTML=rows.map(function(x){return '<tr><td>'+(x.date||x.month)+'</td><td><strong>'+x.vendor+'</strong><br><small>'+x.batch+'</small></td><td>'+x.description+'</td><td>'+x.category+'</td><td>'+x.project+'</td><td><button class="status-btn" onclick="toggleStatus('+x._i+')"><span class="badge '+(x.status==="Settled"?"settled":"ar")+'">'+x.status+'</span></button></td><td class="amount">'+money(x.amount)+'</td></tr>';}).join("");}
 function setup(){var months=[...new Set(data.map(function(x){return x.month;}))],projects=[...new Set(data.map(function(x){return x.project;}))].sort(),cats=[...new Set(data.map(function(x){return x.category;}))].sort();document.getElementById("month").innerHTML='<option value="">All months</option>'+months.map(function(x){return "<option>"+x+"</option>";}).join("");document.getElementById("project").innerHTML='<option value="">All activities</option>'+projects.map(function(x){return "<option>"+x+"</option>";}).join("");document.getElementById("cat").innerHTML='<option value="">All categories</option>'+cats.map(function(x){return "<option>"+x+"</option>";}).join("");}
 function exportCSV(){var rows=filtered(),cols=["date","month","vendor","description","category","project","status","amount"];var csv=[cols.join(",")].concat(rows.map(function(r){return cols.map(function(c){return '"'+String(r[c]||"").replaceAll('"','""')+'"';}).join(",");})).join("\n");var b=new Blob([csv],{type:"text/csv;charset=utf-8"}),a=document.createElement("a");a.href=URL.createObjectURL(b);a.download="Club1600_SAA_Expenses_Filtered.csv";a.click();}
-function renderAll(){renderKPIs();renderMonthly();renderCategories();renderProjects();renderVisualCharts();renderTable();}
+function renderAll(){renderKPIs();renderVisualCharts();renderTable();}
 load();setup();renderAll();
 </script>
 </body>
